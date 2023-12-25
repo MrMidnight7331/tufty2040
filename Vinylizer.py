@@ -1,8 +1,9 @@
 # @Name: Vinylizer tufty
 # @Author: MrMidnight
-# @Version: 2.5
+# @Version: 2.6
 
 #==(Imports)================================================================================================================
+
 from picographics import PicoGraphics, DISPLAY_TUFTY_2040
 from pimoroni import Button
 import time
@@ -45,7 +46,7 @@ TOP_HEIGHT = 40
 
 # Text
 TOP_NAME = "Vinylizer"
-desc = "By: MrMridnight, Version: 1.2"
+desc = "By: MrMridnight, Version: 2.6"
 ALBUM = "No Album found"
 SIDE = ""
 RNG_Count = 0
@@ -118,6 +119,12 @@ def draw_badge():
     display.set_pen(LIGHTEST)
     display.set_font("bitmap8")
     display.text(f"RTD: {RNG_Count}", BORDER_SIZE + PADDING + 40, BORDER_SIZE + 125 + PADDING + TOP_HEIGHT + 30, WIDTH, 2)
+    
+    # draw Discogs
+    display.set_pen(LIGHTEST)
+    display.set_font("bitmap8")
+    display.text("DISCOGS", BORDER_SIZE + PADDING + 120, BORDER_SIZE + 125 + PADDING + TOP_HEIGHT + 30, WIDTH, 2)    
+    
     
     # draw Reset
     display.set_pen(LIGHTEST)
@@ -217,7 +224,7 @@ while True:
             
     
     elif Status == "qr":
-        if button_a.is_pressed:
+        if button_a.is_pressed or button_b.is_pressed or button_c.is_pressed:
             rng()
             draw_badge()
             display.update()

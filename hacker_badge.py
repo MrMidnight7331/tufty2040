@@ -1,7 +1,9 @@
-# Hacker_Badge
-# By: MrMidnight
+# @Name: Hacker Badge
+# @Author: MrMidnight
+# @Version: 2.1
 
-#Imports
+
+#==(Imports)=======================================================================================================================
 
 from picographics import PicoGraphics, DISPLAY_TUFTY_2040
 from pimoroni import Button
@@ -9,6 +11,9 @@ import time
 import jpegdec
 import qrcode
 from machine import Pin, PWM
+
+
+#==(Init Variables)================================================================================================================
 
 # Buttons assignment
 display = PicoGraphics(display=DISPLAY_TUFTY_2040)
@@ -21,7 +26,6 @@ button_boot = Button(23, invert=False)
 
 WIDTH, HEIGHT = display.get_bounds()
 
-
 # Mytheme
 LIGHTEST= display.create_pen(203, 166, 247)
 LIGHT = display.create_pen(245, 224, 220)
@@ -29,7 +33,7 @@ DARK = display.create_pen(30, 30, 46)
 DARKEST = display.create_pen(30, 30, 46)
 
 
-# Change your badge and QR details here!
+# Change badge and QR details here!
 TOP_NAME = "Hacker:"
 NAME = "Mr.Midnight"
 BLURB1 = "HTB: Pro-Hacker"
@@ -39,16 +43,18 @@ BLURB4 = "Cert: eJPT"
 
 QR_TEXT1 = "https://twitter.com/MrMidnight53"
 QR_TEXT2 = "https://youtube.com/@mrmidnight7331?si=7tnpSpfo6dE_eKiP"
-QR_TEXT3 = "https://www.lexaloffle.com/bbs/?uid=59400"
+QR_TEXT3 = "https://github.com/MrMidnight7331"
 
 IMAGE_NAME = "profilepicture.jpg"
 
-# Some constants we'll use for drawing
 BORDER_SIZE = 4
 PADDING = 10
 TOP_HEIGHT = 40
 
 
+#==(Define Functions)===============================================================================================================
+
+# Draws badge
 def draw_badge():
     # draw border
     display.set_pen(LIGHTEST)
@@ -86,7 +92,7 @@ def draw_badge():
     display.text(BLURB3, BORDER_SIZE + PADDING + 135 + PADDING, 175, 160, 2)
     display.text(BLURB4, BORDER_SIZE + PADDING + 135 + PADDING, 210, 160, 2)
 
-
+# Print PFP
 def show_photo():
     j = jpegdec.JPEG(display)
 
@@ -100,7 +106,7 @@ def show_photo():
     # Decode the JPEG
     j.decode(BORDER_SIZE + PADDING, HEIGHT - (BORDER_SIZE + PADDING) - 120)
 
-
+# More QR code stuff
 def measure_qr_code(size, code):
     w, h = code.get_size()
     module_size = int(size / w)
@@ -117,7 +123,7 @@ def draw_qr_code(ox, oy, size, code):
             if code.get_module(x, y):
                 display.rectangle(ox + x * module_size , oy + y * module_size, module_size, module_size)
 
-
+# Shows Twitter
 def show_qr():
     display.set_pen(DARK)
     display.clear()
@@ -139,6 +145,7 @@ def show_qr():
     display.text("e", 20, 110)
     display.text("r", 20, 130)
 
+# Shows YouTube
 def show_qr2():
     display.set_pen(DARK)
     display.clear()
@@ -161,9 +168,7 @@ def show_qr2():
     display.text("b", 20, 110)
     display.text("e", 20, 130)
     
-
-    
-    
+# Shows GitHub
 def show_qr3():
     display.set_pen(DARK)
     display.clear()
@@ -178,17 +183,12 @@ def show_qr3():
     
     
     display.set_pen(LIGHT)
-    display.text("L", 20, 10)
-    display.text("e", 20, 30)
-    display.text("x", 20, 50)
-    display.text("a", 20, 70)
-    display.text("l", 20, 90)
-    display.text("o", 20, 110)
-    display.text("f", 20, 130)
-    display.text("f", 20, 150)
-    display.text("l", 20, 170)
-    display.text("e", 20, 190)
-    
+    display.text("G", 20, 10)
+    display.text("i", 20, 30)
+    display.text("t", 20, 50)
+    display.text("H", 20, 70)
+    display.text("u", 20, 90)
+    display.text("b", 20, 110)
 
 
 
@@ -204,12 +204,12 @@ pwm = PWM(Pin(25))
 
 pwm.freq(1000)
 
-
 def blink_light():
     for duty in range(65025, 0, -1):
         pwm.duty_u16(duty)
 
 
+#==(Main Function)================================================================================================================
 
 while True:
     if button_up.is_pressed or button_down.is_pressed:
@@ -218,27 +218,21 @@ while True:
         show_photo()
         display.update()
         blink_light()
-
-        
     
     elif button_a.is_pressed:
             badge_mode = "qr"
             show_qr()
             display.update()
             blink_light()
-
-                
-        
+       
     elif button_b.is_pressed:
             badge_mode = "qr"
             show_qr2()
             display.update()
             blink_light()
 
-
     elif button_c.is_pressed:
             badge_mode = "qr"
             show_qr3()
             display.update()
             blink_light()
-
