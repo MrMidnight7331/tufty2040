@@ -70,7 +70,6 @@ def blink_light():
         pwm.duty_u16(duty)
 
 
-
 # Draw Starting Screen
 def init_badge():
     # draw border
@@ -338,7 +337,6 @@ while True:
             Status = "init"
             time.sleep(0.5)
             
-    
     elif Status == "qr":
         if button_a.is_pressed or button_b.is_pressed or button_c.is_pressed:
             rng()
