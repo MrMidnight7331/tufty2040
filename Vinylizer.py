@@ -1,6 +1,6 @@
 # @Name: Vinylizer tufty
 # @Author: MrMidnight
-# @Version: 3.0
+# @Version: 4.1
 
 # ==(Imports)================================================================================================================
 
@@ -36,7 +36,7 @@ TOP_HEIGHT = 40
 
 # Text
 TOP_NAME = "Vinylizer"
-desc = "By: MrMridnight, Version: 3.0"
+desc = "By: MrMridnight, Version: 4.1"
 ALBUM = "No Album found"
 SIDE = ""
 RNG_Count = 0
@@ -125,17 +125,17 @@ def draw_badge():
     # draw Count
     display.set_pen(LIGHTEST)
     display.set_font("bitmap8")
-    display.text(f"RTD: {RNG_Count}", BORDER_SIZE + PADDING + 40, BORDER_SIZE + 125 + PADDING + TOP_HEIGHT + 30, WIDTH, 2)
+    display.text(f"RTD: {RNG_Count}", BORDER_SIZE + PADDING + 38, BORDER_SIZE + 125 + PADDING + TOP_HEIGHT + 30, WIDTH, 2)
 
     # draw Discogs
     display.set_pen(LIGHTEST)
     display.set_font("bitmap8")
-    display.text("DISCOGS", BORDER_SIZE + PADDING + 120, BORDER_SIZE + 125 + PADDING + TOP_HEIGHT + 30, WIDTH, 2)
+    display.text("DISCOGS", BORDER_SIZE + PADDING + 117, BORDER_SIZE + 125 + PADDING + TOP_HEIGHT + 30, WIDTH, 2)
 
     # draw Reset
     display.set_pen(LIGHTEST)
     display.set_font("bitmap8")
-    display.text("RESET", BORDER_SIZE + PADDING + 220, BORDER_SIZE + 125 + PADDING + TOP_HEIGHT + 30, WIDTH, 2)
+    display.text("RESET", BORDER_SIZE + PADDING + 215, BORDER_SIZE + 125 + PADDING + TOP_HEIGHT + 30, WIDTH, 2)
 
 # Draw management_mode
 def management_mode():
@@ -181,7 +181,7 @@ def draw_qr_code(ox, oy, size, code):
 # Function to add a new album to the vinyl_albums list
 def add_album(album_name, album_sides):
     # Replace commas and commas followed by space with spaces and convert to uppercase for each side
-    album_sides = [side.strip().upper().replace(',', ' ').replace(', ', ' ') for side in album_sides]
+    album_sides = [chr(65 + i) for i in range(int(album_sides))]
 
     new_album = {"name": album_name, "sides": album_sides}
     vinyl_albums.append(new_album)
@@ -219,10 +219,11 @@ def manage_vinyls():
             album_name = input("Enter the album name: ")
             
             # Modified input handling
-            sides_input = input("Enter the sides (comma-separated): ").upper()
-            album_sides = sides_input.replace(" ", "").split(',')
-            
-            add_album(album_name, album_sides)
+            try:
+                sides_input = int(input("Enter the number of sides: "))
+                add_album(album_name, sides_input)
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
 
             # Save the updated list to the vinyl_albums.json file
             with open("vinyl_albums.json", "w") as file:
@@ -253,7 +254,7 @@ def manage_vinyls():
             break
             
         else:
-            print("Invalid action. Please choose 'W' for write, 'D' for delete, 'L' for list, or 'Q' for quit.")
+            print("Invalid action. Please choose 'A' to Add, 'D' to delete, 'L' to list, or 'Q' to quit.")
 
 
 # Draws QR Code
@@ -338,8 +339,7 @@ while True:
             time.sleep(0.5)
             
     elif Status == "qr":
-        if button_a.is_pressed or button_b.is_pressed or button_c.is_pressed:
-            rng()
+        if button_a.is_pressed or button_b.is_pressed or button_c.is_pressed or button_up.is_pressed or button_down.is_pressed:
             draw_badge()
             display.update()
             time.sleep(0.5)
