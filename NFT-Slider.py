@@ -1,6 +1,6 @@
 # @Name: NFT-Slider
 # @Author: MrMidnight
-# @Version: 1.2
+# @Version: 1.3
 
 #==(Imports)=======================================================================================================================
 from picographics import PicoGraphics, DISPLAY_TUFTY_2040
@@ -97,7 +97,6 @@ def update_display():
         display.text(char, x + text_width + 10, y + i * 20, scale=3)
     
     display.update()
-
 
 
 def show_menu():
