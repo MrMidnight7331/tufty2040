@@ -103,7 +103,7 @@ def show_menu():
     display.set_pen(DARKEST)
     display.clear()
     display.set_pen(LIGHTEST)
-    display.text("NFT Slider", 70, 10, 10, 4)
+    display.text("NFT Slider", 10, 10, 10, 4)
     
     # Display collections
     text_height = 20  # Adjust spacing between lines
@@ -114,7 +114,7 @@ def show_menu():
             display.set_pen(LIGHTEST)
         else:
             display.set_pen(LIGHT)
-        display.text(collection, 70, y_start + i * text_height, scale=3)
+        display.text(collection, 10, y_start + i * text_height, scale=3)
     
     display.update()
 
