@@ -1,6 +1,6 @@
 # @Name: NFT-Slider
 # @Author: MrMidnight
-# @Version: 1.3
+# @Version: 1.4
 
 #==(Imports)=======================================================================================================================
 from picographics import PicoGraphics, DISPLAY_TUFTY_2040
@@ -129,7 +129,7 @@ def slideshow():
             if button_b.is_pressed:
                 in_slideshow = False
                 return
-            time.sleep(0.1)
+            time.sleep(0.2)
 
 # Draw the initial menu
 show_menu()
